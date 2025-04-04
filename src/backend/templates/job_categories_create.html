@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if edit_mode == True %}
+    <h1>Редактирование категории</h1>
+{% else %}
+    <h1>Добавление категории</h1>
+{% endif %}
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name(class="form-control") }}<br>
+        {% for error in form.name.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{ message }}
+</form>
+{% endblock %}

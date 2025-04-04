@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a class="btn btn-success" href="{{ url_for('departments_create.department_create') }}">
+        <h5>Добавить департамент</h5>
+    </a>
+    <a class="btn btn-primary" href="{{ url_for('main_page.index') }}">
+        <h5>Назад к работам</h5>
+    </a>
+    <h2 class="centered-text">Список департаментов</h2>
+    {% for department in departments %}
+        <div class="table_container">
+            <div class="department label-buttons-container">
+                <h3>Департамент #{{ loop.index }}</h3>
+                {% if department.chief_id == session.user_id or session.user_id == 1 %}
+                    <div class="element">
+                        <a class="btn btn-warning" href="{{ url_for('departments_update.department_update', department_id=department.id) }}">Редактировать</a>
+                        <a class="btn btn-danger" href="{{ url_for('departments_delete.department_delete', department_id=department.id) }}">Удалить</a>
+                    </div>
+                {% endif %}
+            </div>
+            <table>
+                <tr>
+                    <th>Название департамента</th>
+                    <th>Лидер департамента</th>
+                    <th>Работники департамента</th>
+                    <th>Почта</th>
+                </tr>
+                <tr>
+                    <td>{{ department.title }}</td>
+                    <td>{{ department.department_chief.name }} {{ department.department_chief.surname }}</td>
+                    <td>{{ department.members }}</td>
+                    <td>{{ department.email }}</td>
+                </tr>
+            </table>
+        </div>
+    {% endfor %}
+{% endblock %}

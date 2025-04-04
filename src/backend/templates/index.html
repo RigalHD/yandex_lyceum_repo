@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <a class="btn btn-success" href="{{ url_for('jobs_create.job_create') }}">
+        <h5>Добавить работу</h5>
+    </a>
+    <a class="btn btn-success" href="{{ url_for('job_categories_create.job_category_create') }}">
+        <h5>Добавить категорию работы</h5>
+    </a>
+    <a class="btn btn-primary" href="{{ url_for('departments_retrieve.departments_retieve') }}">
+        <h5>Просмотр департаментов</h5>
+    </a>
+    <h2 class="centered-text">Список работ</h1>
+    {% for job in jobs %}
+        <div class="table_container">
+            <div class="job label-buttons-container">
+                <h3>Работа #{{ loop.index }}</h2>
+                {% if job.team_leader == session.user_id or session.user_id == 1 %}
+                    <div class="element">
+                        <a class="btn btn-warning" href="{{ url_for('jobs_update.job_update', job_id=job.id) }}">Редактировать</a>
+                        <a class="btn btn-danger" href="{{ url_for('jobs_delete.job_delete', job_id=job.id) }}">Удалить</a>
+                    </div>
+                {% endif %}
+            </div>
+            <table>
+                <tr>
+                    <th>Название работы</th>
+                    <th>Лидер команды</th>
+                    <th>Длительность работы (в часах)</th>
+                    <th>Список работников</th>
+                    <th>Категория опасности</th>
+                    <th>Закончена ли работа?</th>
+                </tr>
+                <tr>
+                    <td>{{ job.job }}</td>
+                    <td>{{ job.leader.name }} {{ job.leader.surname }} </td>
+                    <td>{{ job.work_size }}</td>
+                    <td>{{ job.collaborators }}</td>
+                    <td>{{ job.category.id }}</td>
+                    {% if job.is_finished == False %}
+                        <td>Не выполнена</td>
+                    {% else %}
+                        <td>Выполнена</td>
+                    {% endif %}
+                </tr>
+            </table>
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h4>Список профессий</h1>
+    {% for occupation in profs %}
+        <ol>{{ loop.index }}. {{ occupation }}</ol>
+    {% endfor %}
+{% endblock %}

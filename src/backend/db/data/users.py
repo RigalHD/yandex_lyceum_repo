@@ -10,7 +10,12 @@ from .base import BaseModel
 class User(BaseModel, UserMixin, SerializerMixin):
     __tablename__ = "users"
 
-    serialize_rules = ("-related_models.user.name",)
+    serialize_rules = (
+        "-jobs_leading",
+        "-created_jobs",
+        "-chief_departments",
+        "-hashed_password",
+    )
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     surname: Mapped[str] = mapped_column(nullable=True)

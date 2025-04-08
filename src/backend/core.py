@@ -2,11 +2,13 @@ import datetime
 
 from flask import Flask, g, jsonify, make_response, redirect
 from flask_login import LoginManager
+from flask_restful import Api
 
 from backend.db.data import db_session
 from backend.db.data.users import User
 
 app = Flask(__name__)
+api = Api(app)
 
 app.config["UPLOAD_FOLDER"] = "src/backend/static/img"
 app.config["SECRET_KEY"] = "yandexlyceum_secret_key"

@@ -1,5 +1,7 @@
 from argparse import ArgumentParser
 
+from backend.api.users.users_resource import UserResource, UsersResource
+from backend.core import api
 from backend.core import app
 from backend.db.data import db_session
 from backend.misc.router_register import register_routers
@@ -21,7 +23,8 @@ def main():
     routers = (*app_routers, *api_routers)
 
     register_routers(routers)
-
+    api.add_resource(UsersResource, "/api/users")
+    api.add_resource(UserResource, "/api/users/<int:user_id>")
     app.run()
 
 
